@@ -19,6 +19,14 @@ Afin de pouvoir réaliser des tests de bon fonctionnement, il y a également une
 - effet cascade :le moindre changement dans les données donne un résultat complêtement différent
 - resistant à la collision : 2 sources de données doivent avoir un minimum de chances d'avoir le même hash
 
+### Nomenclature
+
+- MAC : Message Authenticity Code
+- SALT: C'est des données random utilisées avec les algorithmes de hashage qui permettent d'éviter de pouvoir remonter aux donénes avec un dictionnaire. Il y a 2 options :
+  - soit le salt est généré pour chaque hashage et stocké avec la donnée hashée.
+  - soit le salt n'est pas stocké avec la données hashé mais est dans ce cas gardé secret. En le perdant, on est plus capable de vérifier les signaure faites avec. Dans le cas ou il est secret, on appelle souvent ça "pepper" au lieu de "salt".
+- HMAC : (H = Hashed) Méthode pour éviter que des données (ex: mot de passe) puissent être retrouver via un dictionnaire. On crée un hash d'un salt + de la donnée.
+
 ### Les algorithmes implémentés :
 
 - [sha1](./src/sha1/README.md)
