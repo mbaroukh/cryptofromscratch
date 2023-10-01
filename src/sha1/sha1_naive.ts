@@ -63,6 +63,7 @@ const sha1 = {
       fullBinaryMessage.length % 512 === 0,
       "fullBinaryMessage devrait avoir une longueur telle que l % 512 = 448"
     );
+    console.log(fullBinaryMessage);
 
     // On découpe en blocs. Chaque bloc contient 16 mots de 32 bits
     const blocsBinary = Array.from(
@@ -84,7 +85,6 @@ const sha1 = {
 
     // Calcul principal en utilisant la méthode 6.1 de la doc
     let h = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0];
-    console.log(h);
     for (let b = 0; b < blocsBinary.length; b++) {
       const W = blocsBinary[b].map((n) => parseInt(n, 2));
       for (let i = 0; i < 79; i++) {

@@ -15,7 +15,7 @@ import sha1Optimize from "./sha1_naive";
 ].forEach(({ impl, name }) => {
   describe(`tests sha1 - ${name}`, () => {
     it("genere le meme hash", async () => {
-      const key = "coucou";
+      const key = "Hello world";
       const hashed = await impl.hash(key);
       expect(hashed).toBeDefined();
       const opensslHash = await openssl.sha1.hash(key);

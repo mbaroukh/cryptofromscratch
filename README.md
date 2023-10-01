@@ -1,9 +1,9 @@
 # CryptoFromScratch
 
-Tentative d'implémentation d'algorithmes liés à la cryptographie (hashage, chiffrement symétrique, chiffremetn asymétrique, ...) en js.  
-(et non, désolé, ce n'est pas "comment faire votre propre blockchain ...)
+Tentative d'implémentation d'algorithmes liés à la cryptographie (hashage, chiffrement symétrique, chiffrement asymétrique, ...) en ts dans le but de comprendre le fonctionnement de ces algorithmes.  
+(et non, désolé, ce n'est pas "comment faire votre propre blockchain" même s'il y a "crypto" dans le sujet :) ...)
 
-Afin de pouvoir réaliser des tests de bon fonctionnement, il y a également une implémentation de tous ces algorithme [qui appelle openssl](./src/openssl/openssl.ts).
+Afin de pouvoir réaliser des tests de bon fonctionnement, il y a également une implémentation de tous ces algorithmes [qui appelle openssl](./src/openssl/openssl.ts).
 
 **Note1**: THIS IS A WORK IN PROGRESS !. Donc pas grand chose de terminé encore. Revenez plus tard.  
 **Note2**: Si un jour certains algorithmes fonctionnent, l'objectif n'est pas de les utiliser concrêtement en production ! Il existe déjà des implémentations native, testées et surtout maintenues. C'est bien évidemment celles-ci qu'il faut utiliser.  
@@ -17,15 +17,15 @@ Afin de pouvoir réaliser des tests de bon fonctionnement, il y a également une
 - rapide : bah parce que ...
 - déterministe : les mêmes données en entrée doivent toujours donner le même résultat
 - effet cascade :le moindre changement dans les données donne un résultat complêtement différent
-- resistant à la collision : 2 sources de données doivent avoir un minimum de chances d'avoir le même hash
+- resistant à la collision : 2 sources de données doivent avoir un minimum de chances (voire quasiment aucune) d'avoir le même hash
 
 ### Nomenclature
 
 - MAC : Message Authenticity Code
-- SALT: C'est des données random utilisées avec les algorithmes de hashage qui permettent d'éviter de pouvoir remonter aux donénes avec un dictionnaire. Il y a 2 options :
+- HMAC : (H = Hashed) MAC créé en ajoutant aux données hashées un salt (cf ligne du dessous) afin de contrer les attaque par dictionnaire.
+- SALT: Donnée random ajoutée aux données à hasher. Sans salt sha1 vas toujours renvoyer le même résultat pour la même données en entrée (principe de base d'un algorithme de hashage). Donc, dans le cas de hashs de mots de passe, si on a un dictionnaire des hashs des mots de passe les plus couramment utilisés, on peut remonter facilement remonter aux mots de passe qui se trouvent dans ce dictionnaire. Ajouter un salt lors du hash va rendre le hash différent de celui par défaut rendant impossile l'utilisation d'un dictionnaire. Il y a 2 options :
   - soit le salt est généré pour chaque hashage et stocké avec la donnée hashée.
-  - soit le salt n'est pas stocké avec la données hashé mais est dans ce cas gardé secret. En le perdant, on est plus capable de vérifier les signaure faites avec. Dans le cas ou il est secret, on appelle souvent ça "pepper" au lieu de "salt".
-- HMAC : (H = Hashed) Méthode pour éviter que des données (ex: mot de passe) puissent être retrouver via un dictionnaire. On crée un hash d'un salt + de la donnée.
+  - soit le salt n'est pas stocké avec la donnée hashée mais est gardé secret. En le perdant, on est plus capable de vérifier les signaure faites avec. Dans le cas ou il est secret, on appelle souvent ça "pepper" au lieu de "salt".
 
 ### Les algorithmes implémentés :
 
