@@ -5,9 +5,10 @@ Tentative d'implémentation d'algorithmes liés à la cryptographie (hashage, ch
 
 Afin de pouvoir réaliser des tests de bon fonctionnement, il y a également une implémentation de tous ces algorithmes [qui appelle openssl](./src/openssl/openssl.ts).
 
-**Note1**: THIS IS A WORK IN PROGRESS !. Donc pas grand chose de terminé encore. Revenez plus tard.  
-**Note2**: Si un jour certains algorithmes fonctionnent, l'objectif n'est pas de les utiliser concrêtement en production ! Il existe déjà des implémentations native, testées et surtout maintenues. C'est bien évidemment celles-ci qu'il faut utiliser.  
-**Note3**: J'ai hésité à le faire en anglais mais il existe tellement peu de ressources en français que le faire en français pourra peut-être être utile à ceux pour qui l'anglais est une barrière.
+- **Note1**: THIS IS A WORK IN PROGRESS !. Status actuel :
+  - sha1 : Implémentation "naïve" fonctionnelle
+- **Note2**: Si un jour certains algorithmes fonctionnent, l'objectif n'est pas de les utiliser concrêtement en production ! Il existe déjà des implémentations native, testées et surtout maintenues. C'est bien évidemment celles-ci qu'il faut utiliser.
+- **Note3**: J'ai hésité à le faire en anglais mais il existe tellement peu de ressources en français que le faire en français pourra peut-être être utile à ceux pour qui l'anglais est une barrière.
 
 ## Hashage
 
