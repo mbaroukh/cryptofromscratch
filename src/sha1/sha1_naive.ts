@@ -17,7 +17,7 @@ export const rotateLeft = (value: number, digits: number) => {
   // Les opérateurs de shift en js sont sur 32 bits.
   // Par contre le shift left retour est un nombre signé.
   // Il existe un shift right non signé mais pas de shift left ...
-  return Math.abs(Math.abs(value << digits) | (value >>> (32 - digits)));
+  return ((value << digits) | (value >>> (32 - digits))) >>> 0;
 };
 
 const sha1 = {
@@ -57,13 +57,12 @@ const sha1 = {
     const fullBinaryMessage =
       messageBinairePlus1 +
       Array.from({ length: missing0 }, () => "0").join("") +
-      padL((messageBinairePlus1.length + missing0).toString(2), 64);
+      padL(messageBinaire.length.toString(2), 64);
 
     assert(
       fullBinaryMessage.length % 512 === 0,
       "fullBinaryMessage devrait avoir une longueur telle que l % 512 = 448"
     );
-    console.log(fullBinaryMessage);
 
     // On découpe en blocs. Chaque bloc contient 16 mots de 32 bits
     const blocsBinary = Array.from(
@@ -87,49 +86,49 @@ const sha1 = {
     let h = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0];
     for (let b = 0; b < blocsBinary.length; b++) {
       const W = blocsBinary[b].map((n) => parseInt(n, 2));
-      for (let i = 0; i < 79; i++) {
-        for (let t = 16; t <= 79; t++) {
-          W[t] = rotateLeft(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1);
-        }
-        let A = h[0],
-          B = h[1],
-          C = h[2],
-          D = h[3],
-          E = h[4];
-        for (let t = 0; t < 79; t++) {
-          const f =
-            t <= 19
-              ? (B & C) | ((B ^ DWORD) & D)
-              : t <= 39
-              ? B ^ C ^ D
-              : t <= 59
-              ? (B & C) | (B & D) | (C & D)
-              : B ^ C ^ D;
-          const K =
-            t <= 19
-              ? 0x5a827999
-              : t <= 39
-              ? 0x6ed9eba1
-              : t <= 59
-              ? 0x8f1bbcdc
-              : 0xca62c1d6;
-          const temp = rotateLeft(A, 5) + f + E + W[t] + K;
-          E = D;
-          D = C;
-          C = rotateLeft(B, 30);
-          B = A;
-          A = temp;
-        }
-        h[0] = h[0] + A;
-        h[1] = h[1] + B;
-        h[2] = h[2] + C;
-        h[3] = h[3] + D;
-        h[4] = h[4] + E;
+
+      for (let t = 16; t <= 79; t++) {
+        W[t] = rotateLeft(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1);
       }
+      let A = h[0],
+        B = h[1],
+        C = h[2],
+        D = h[3],
+        E = h[4];
+      for (let t = 0; t <= 79; t++) {
+        const f =
+          t <= 19
+            ? (B & C) | ((B ^ DWORD) & D)
+            : t <= 39
+            ? B ^ C ^ D
+            : t <= 59
+            ? (B & C) | (B & D) | (C & D)
+            : B ^ C ^ D;
+        const K =
+          t <= 19
+            ? 0x5a827999
+            : t <= 39
+            ? 0x6ed9eba1
+            : t <= 59
+            ? 0x8f1bbcdc
+            : 0xca62c1d6;
+        const temp = (rotateLeft(A, 5) + f + E + W[t] + K) >>> 0;
+        E = D;
+        D = C;
+        C = rotateLeft(B, 30);
+        B = A;
+        A = temp;
+      }
+
+      h[0] = h[0] + A;
+      h[1] = h[1] + B;
+      h[2] = h[2] + C;
+      h[3] = h[3] + D;
+      h[4] = h[4] + E;
     }
 
     const toHex = (n: number) => {
-      return padL((n & DWORD).toString(16), 8);
+      return padL((n >>> 0).toString(16), 8);
     };
     const result = h.map((v) => toHex(v)).join("");
 

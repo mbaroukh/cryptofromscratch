@@ -25,4 +25,4 @@ Donc l'implémentation se fera à l'aide de la spec qui sera plus facile à lire
 
 ## Résultat attendu
 
-Pour une chaine de caracère
+En testant sur la chaine de caractères `Hello world` le résultat attendu est `7b502c3a1f48c8609ae212cdfb639dee39673f5e`

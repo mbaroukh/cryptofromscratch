@@ -29,8 +29,16 @@ describe("test utilities", () => {
     expect(rotateLeft(0x80000000, 1)).toBe(1);
     expect(rotateLeft(0x40000000, 1)).toBe(0x80000000);
     expect(rotateLeft(0x0001, 1)).toBe(2);
-    expect(rotateLeft(0x0001, 5)).toBe(0x10);
-
+    expect(rotateLeft(0x0001, 5)).toBe(0x20);
     expect(rotateLeft(0xd0000000, 4)).toBe(0xd);
+    expect(rotateLeft(parseInt("11100000100010101001101111110", 2), 1)).toBe(
+      parseInt("111000001000101010011011111100", 2)
+    );
+    expect(rotateLeft(parseInt("11100000100010101001101111110000", 2), 1)).toBe(
+      parseInt("11000001000101010011011111100001", 2)
+    );
+    expect(
+      rotateLeft(parseInt("111000001000101010011011111100000", 2), 1)
+    ).toBe(parseInt("10000010001010100110111111000001", 2));
   });
 });
